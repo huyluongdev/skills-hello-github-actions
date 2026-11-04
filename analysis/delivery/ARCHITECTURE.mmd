@@ -1,0 +1,49 @@
+graph TD
+  subgraph Trigger["GitHub events"]
+    E0[push to main]
+    E1[push to welcome-workflow]
+    E4[PR opened to main]
+    E5[PR closed to main]
+  end
+  subgraph Engine["Step workflows (.github/workflows)"]
+    W0[0-start-exercise.yml]
+    W1[1-step.yml]
+    W2[2-step.yml]
+    W3[3-step.yml]
+    W4[4-step.yml]
+    W5[5-step.yml]
+  end
+  subgraph Content["Learner instructions (.github/steps)"]
+    S1[1-step.md]
+    S2[2-step.md]
+    S3[3-step.md]
+    S4[4-step.md]
+    S5[5-step.md]
+    SR[x-review.md]
+  end
+  subgraph External["Outside the repo"]
+    TK[skills/exercise-toolkit v0.6.0 / v0.8.1]
+    KP[skills/action-keyphrase-checker v1]
+    TV[skills/action-text-variables v2]
+  end
+  E0 --> W0
+  E1 --> W1
+  E1 --> W2
+  E1 --> W3
+  E4 --> W4
+  E5 --> W5
+  W0 -->|enables| W1
+  W1 -->|disables itself, enables| W2
+  W2 -->|enables| W3
+  W3 -->|enables| W4
+  W4 -->|enables| W5
+  W0 --> S1
+  W1 --> S2
+  W2 --> S3
+  W3 --> S4
+  W4 --> S5
+  W5 --> SR
+  W0 --> TK
+  W1 --> TK
+  W1 --> KP
+  W1 --> TV
